@@ -1,4 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
+const addCountryAction = (country) => ({type: 'ADD_COUNTRY', name: country})
+const doneCountryAction = (country) => ({type: 'DONE_COUNTRY', name: country})
 
 class Country extends React.Component {
   constructor() {
@@ -27,6 +31,7 @@ class Country extends React.Component {
   }
 
   render(){
+    const {countries} = this.props
     return (
       <div>
         <div>
@@ -34,7 +39,7 @@ class Country extends React.Component {
           <p>I want to travel in <strong>{this.state.country}</strong></p>
           <p>List of Countries that I want to travel</p>
           <ul>
-            {this.props.countries.filter(country => {
+            {countries.filter(country => {
               return country.done === false
             }).map(country => {
               return <li key={country.name}><button value={country.name}>Edit</button><button value={country.name} onClick={this.doneCountry}>Done</button> {country.name}</li>
@@ -42,10 +47,10 @@ class Country extends React.Component {
           </ul>
           <p>List of Done Countries</p>
           <ul>
-            {this.props.countries.filter(country => {
+            {countries.filter(country => {
               return country.done === true
             }).map(country => {
-              return <li key={country.name}><button value={country.name}>Edit</button><button value={country.name} onClick={this.doneCountry}>Done</button> {country.name}</li>
+              return <li key={country.name}>{country.name}</li>
             })}
           </ul>
         </div>
@@ -54,4 +59,9 @@ class Country extends React.Component {
   }
 }
 
-export default Country
+export default connect(
+  (state) => ({ countries: state.countryTravel.countries }),
+  (dispatch) => ({
+    onAddCountryClick: (country) => dispatch(addCountryAction(country)),
+    onDoneCountryClick: (country) => dispatch(doneCountryAction(country))
+  }))(Country)

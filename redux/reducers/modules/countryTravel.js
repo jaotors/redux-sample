@@ -5,7 +5,8 @@ const countryTravelState = {
     { name:'Canada', done: false}
   ],
 }
-function countryTravel(state=countryTravelState, action) {
+
+export default function countryTravel(state=countryTravelState, action) {
   let { countries } = state
   switch(action.type) {
     case 'ADD_COUNTRY':
