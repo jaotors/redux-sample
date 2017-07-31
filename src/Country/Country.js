@@ -24,6 +24,9 @@ class Country extends React.Component {
 
   addCountry() {
     if(this.state.country !== '"country"') this.props.onAddCountryClick(this.state.country)
+    this.setState({
+      country: '"country"'
+    })
   }
 
   doneCountry(e) {
@@ -47,7 +50,7 @@ class Country extends React.Component {
     return (
       <div>
         <div>
-          <p><input type="text" onChange={this.handleChange} /><button onClick={this.addCountry}>Add</button></p>
+          <p><input type="text" value={(this.state.country === '"country"') ? '' : this.state.country} onChange={this.handleChange} /><button onClick={this.addCountry}>Add</button></p>
           <p>I want to travel in <strong>{this.state.country}</strong></p>
           <p>List of Countries that I want to travel</p>
           <ul>
