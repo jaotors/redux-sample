@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import action from './action'
+import './Counter.css'
 
 class Counter extends React.Component {
   render(){
@@ -8,7 +9,7 @@ class Counter extends React.Component {
     return (
       <div>
         <button onClick={onDecreaseClick}>Decrease</button>
-        <span>{value}</span>
+        <span className="counter-value">{value}</span>
         <button onClick={onIncreaseClick}>Increase</button>
       </div>
     )

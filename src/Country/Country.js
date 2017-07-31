@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import action from './action'
+import './Country.css'
 
 class Country extends React.Component {
   constructor() {
@@ -60,7 +61,7 @@ class Country extends React.Component {
               return (
                 <li key={country.id}>
                   <button value={country.id} onClick={this.doneCountry} disabled={!country.edit ? false : true}>Done</button>
-                  <button value={country.id} onClick={!country.edit ? this.editCountry : this.saveCountry}>{!country.edit ? 'Edit' : 'Save'}</button>
+                  <button className="editBtn" value={country.id} onClick={!country.edit ? this.editCountry : this.saveCountry}>{!country.edit ? 'Edit' : 'Save'}</button>
                   {!country.edit ? country.name : <input type="text" placeholder={country.name} />}
                 </li>
               )
