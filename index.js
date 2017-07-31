@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore, combineReducers } from 'redux'
-import { Provider, connect } from 'react-redux'
-import store from './redux/reducers/store'
+import { Provider } from 'react-redux'
+import store from './redux/store'
 import App from './src/App'
 
 ReactDOM.render(

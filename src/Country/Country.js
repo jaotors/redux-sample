@@ -1,8 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
-const addCountryAction = (country) => ({type: 'ADD_COUNTRY', name: country})
-const doneCountryAction = (country) => ({type: 'DONE_COUNTRY', name: country})
+import action from './action'
 
 class Country extends React.Component {
   constructor() {
@@ -13,6 +11,8 @@ class Country extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.addCountry = this.addCountry.bind(this)
     this.doneCountry = this.doneCountry.bind(this)
+    this.editCountry = this.editCountry.bind(this)
+    this.saveCountry = this.saveCountry.bind(this)
   }
 
   handleChange(e) {
@@ -27,7 +27,19 @@ class Country extends React.Component {
   }
 
   doneCountry(e) {
-    this.props.onDoneCountryClick(e.target.value)
+    this.props.onDoneCountryClick(parseInt(e.target.value))
+  }
+
+  editCountry(e) {
+    this.props.onEditCountryClick(parseInt(e.target.value))
+  }
+
+  saveCountry(e) {
+    if(e.target.nextSibling.value === '') {
+      this.props.onSaveCountryClick(parseInt(e.target.value), e.target.nextSibling.placeholder)
+    } else {
+      this.props.onSaveCountryClick(parseInt(e.target.value), e.target.nextSibling.value)
+    }
   }
 
   render(){
@@ -41,8 +53,14 @@ class Country extends React.Component {
           <ul>
             {countries.filter(country => {
               return country.done === false
-            }).map(country => {
-              return <li key={country.name}><button value={country.name}>Edit</button><button value={country.name} onClick={this.doneCountry}>Done</button> {country.name}</li>
+            }).map((country, index) => {
+              return (
+                <li key={country.id}>
+                  <button value={country.id} onClick={this.doneCountry} disabled={!country.edit ? false : true}>Done</button>
+                  <button value={country.id} onClick={!country.edit ? this.editCountry : this.saveCountry}>{!country.edit ? 'Edit' : 'Save'}</button>
+                  {!country.edit ? country.name : <input type="text" placeholder={country.name} />}
+                </li>
+              )
             })}
           </ul>
           <p>List of Done Countries</p>
@@ -50,7 +68,7 @@ class Country extends React.Component {
             {countries.filter(country => {
               return country.done === true
             }).map(country => {
-              return <li key={country.name}>{country.name}</li>
+              return <li key={country.id}>{country.name}</li>
             })}
           </ul>
         </div>
@@ -62,6 +80,9 @@ class Country extends React.Component {
 export default connect(
   (state) => ({ countries: state.countryTravel.countries }),
   (dispatch) => ({
-    onAddCountryClick: (country) => dispatch(addCountryAction(country)),
-    onDoneCountryClick: (country) => dispatch(doneCountryAction(country))
-  }))(Country)
+    onAddCountryClick: (country) => dispatch(action.addCountryAction(country)),
+    onDoneCountryClick: (id) => dispatch(action.doneCountryAction(id)),
+    onEditCountryClick: (id) => dispatch(action.editCountryAction(id)),
+    onSaveCountryClick: (id, country) => dispatch(action.saveCountryAction(id, country))
+  })
+)(Country)
