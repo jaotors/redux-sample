@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import action from './action'
-import './Country.css'
+import styles from './Country.css'
 
 class Country extends React.Component {
   constructor() {
@@ -48,6 +48,7 @@ class Country extends React.Component {
 
   render(){
     const {countries} = this.props
+    console.log(styles.editBtn)
     return (
       <div>
         <div>
