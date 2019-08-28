@@ -40,6 +40,6 @@
     "redux-devtools": "^3.3.1",
     "style-loader": "^0.18.2",
     "webpack": "^1.12.2",
-    "webpack-dev-server": "^1.12.1"
+    "webpack-dev-server": "^3.1.11"
   }
 }
